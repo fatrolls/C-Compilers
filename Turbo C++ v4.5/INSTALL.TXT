@@ -1,0 +1,572 @@
+
+                           INSTALL.TXT
+                           ===========
+
+SEARCH INSTRUCTIONS:  To go directly to a specific section,
+search for "SECTION -#-" replacing the # with the appropriate
+section number.
+
+
+                        TABLE OF CONTENTS
+
+SECTION 0       System Requirements
+                A)  Minimum Installation
+                B)  Full Installation
+
+SECTION 1       Booting Clean
+                A)  Making a Boot Disk
+                B)  Contents of CONFIG.SYS
+                C)  Contents of AUTOEXEC.BAT
+                D)  Changes to WIN.INI and SYSTEM.INI
+
+SECTION 2       Installation Notes
+                A)  Boot Clean
+                B)  Upgrading Issues
+                C)  Network Installation
+                D)  Hard Drive Installation
+                E)  Installing Under Windows NT or OS/2
+                F)  Installing Under OS/2
+                G)  Installing Under Windows NT
+                H)  Avoid Extended Characters in Path Names
+                I)  Installing Adobe AcroRead
+
+SECTION 3       Trouble Shooting Installation Problems
+                A)  Internal Error, Unable to Start Install
+                B)  Data Integrity or Bad Sector on Disk Errors
+                C)  Install Program Terminates Prematurely
+                D)  General Protection Fault/Unhandled Exception
+                E)  Problems With Installing Win32s
+
+SECTION 4       CD-ROM Information
+                A) "Drive not ready" When Starting Windows
+                B)  Difficult Finding Files
+                C)  Compiling and Running the Examples
+
+SECTION 5       Pipeline Automatic Registration
+
+SECTION 6       How to Get A technical Information Document
+                A)  From TechFax
+                B)  From an On-Line Service
+
+
+
+SECTION -0- SYSTEM REQUIREMENTS
+===============================
+
+Before installing Turbo C++ for Windows 4.5 (TCW) please
+review the minimum system requirements listed below:
+
+A) Minimum Installation (without OWL or Quick Tour)
+
+        4 MB Extended Memory
+        Intel 386 or higher
+        PC-DOS (MS-DOS) 4.01 or later
+        Microsoft Windows 3.1 or later
+        3.5" High Density Disk Drive or CD ROM Drive
+
+  * 8 MB of extended memory is highly recommended for:
+        - improved performance
+        - using the ObjectWindows Library
+        - running multiple applications on Windows
+
+  * The Install program requires Windows enhanced mode.  It
+    does not run under standard mode.
+        
+  * To view the Quick Tour, a screen resolution of 800x600 is 
+    recommended.
+
+B) Hard disk requirements (may vary due to cluster size)
+
+        CD-ROM configuration (tools run from CD):  20 MB
+        Full installation:                         65 MB
+
+   The installation program requires about 5MB of
+   additional hard disk space to run.
+
+   More space is required on hard drives with large cluster
+   sizes (typically drives with a capacity of 1GB or more.)
+
+
+SECTION -1- BOOTING CLEAN
+=========================
+
+It is highly recommended that you boot clean before installing
+TCW 4.5.  Booting your system with a clean configuration will
+eliminate many potential software conflicts that might cause the
+installation to fail.  You will need one blank floppy diskette.
+After making the disk bootable, use a text editor (EDIT, for
+example) to create and/or modify the files mentioned below.  
+
+Note that the instructions below assume that DOS is installed
+into the directory C:\DOS, and that Windows in installed into the
+directory C:\WINDOWS.
+
+Twice below there is a statement "<insert required drivers here>".  
+For the purposes of the clean boot, a "required driver" is one
+that must be loaded so that you can access the devices necessary
+to complete the installation.  For example, for a CD-ROM
+installation, MSCDEX (or equivalent) would be a required driver;
+if you are installing onto a network drive, your network drivers
+are required.  Examples of things that are not "required drivers"
+include EMM386.EXE, QDPMI.SYS, and SMARTDRV.EXE.  If you are
+unsure whether a driver is required, assume it is not.
+
+A) Making a Boot Disk
+
+It is suggested that you create the clean boot configuration on a
+floppy disk, in order to minimize the number of changes made to
+your normal system configuration.
+
+In most cases, inserting a blank diskette in drive A: and typing
+the command
+
+    format a: /s
+
+will work.  See your DOS documentation for more details
+on creating a bootable floppy.
+
+
+B) Contents of CONFIG.SYS (on boot floppy)
+
+    DEVICE=C:\DOS\HIMEM.SYS
+    FILES=40
+    <insert REQUIRED drivers here>
+
+C) Contents of AUTOEXEC.BAT (on boot floppy)
+
+    REM the path statement should be copied verbatim
+    REM from your current AUTOEXEC.BAT.  The line included
+    REM below is an example only.
+
+    PATH=C:\WINDOWS;C:\DOS;C:\TCWIN45\BIN
+
+D) Changes to C:\WINDOWS\WIN.INI and C:\WINDOWS\SYSTEM.INI
+
+Before modifying these files, be sure to back them up: Windows
+will not properly start if they are corrupted (i.e., copy WIN.INI
+WIN.BAK).
+
+    1)  Edit WIN.INI
+
+    2)  Find all lines that begin with either "load=" or "run="
+    and place a single ";" at the start of each line.
+
+    3)  Edit SYSTEM.INI
+
+    4)  If the line that starts with "shell=" is set to
+    something besides "progman.exe", place a ";" at the start of
+    the line, and replace it with "shell=program.exe" (no
+    quotes).  
+
+
+
+SECTION -2- BEFORE YOU BEGIN
+============================
+
+A)  Boot Clean
+
+    It is highly recommended that you boot clean before
+    installing TCWIN 4.5. Booting your system with a clean 
+    configuration will eliminate any potential software 
+    conflicts that might arise during installation. Refer to
+    Section 1 for instructions on how to boot clean.
+
+B)  Upgrading Issues
+
+    If you are upgrading from TC or TCW 3.1, before removing the
+    old version of the compiler, be sure to save the RTL, BIDS,
+    and OWL .DLLs if you have any executables that depend upon
+    them.  Otherwise, you will need to rebuild those applications
+    with the new libraries.
+
+    Remove the previous version of TCWIN from your PATH statement in 
+    your AUTOEXEC.BAT.
+
+    For other upgrading issues, please see the file 
+    TCWIN45\DOC\COMPAT.TXT.
+
+C)  Network Installation
+
+    1) If you are installing TCWIN 4.5 on a network, you may wish to
+    consult Technical Information Document number 1738.  For
+    information on how to receive this document, refer to
+    Section 6.
+
+    2) The Install program needs to update Windows system
+    files.  If you do not have write privileges for the LAN
+    Windows system directory, a system administrator will have
+    to finish the installation for you.  (The system files are
+    on the CD in the WINDOWS and WINDOWS\SYSTEM
+    subdirectories.)
+
+    3) If you choose to install the Quick Tour Help file,
+    then you also need to run Microsoft's Setup program
+    for Video for Windows. Normally the TCW install
+    launches Setup for you automatically.  If you have
+    chosen the WinLAN configuration, however, then a
+    system administrator will have to run the Video for
+    Windows Setup program for you because Setup writes
+    to the system registry.
+
+    Without Video for Windows, the Quick Tour Help file
+    cannot play animation sequences.
+
+D)  Hard Drive Installation
+
+    If you have about 40 megabytes of hard drive space in
+    addition to what is required for the installation of TCWIN
+    4.5, you may want to install the product from your hard
+    drive.  The primary advantage of a hard drive installation is
+    speed:  expect to halve the time it takes to install as
+    compared to an installation from floppy disks.  To install
+    from hard drive, make a temporary directory and then XCOPY
+    each disk into that directory; if you have the CD, XCOPY the
+    INSTALL directory.  Then, run the INSTALL.EXE from the
+    temporary directory rather than from the installation disk.
+
+E)  Installing Under Windows NT or OS/2
+
+    1)  The install will fail if you enter any paths that use long
+        file names (more than 8 letters in the name, more than 3
+        letters in the extension, or exceeding a total path length
+        of 128 characters).
+
+F) Installing Under OS/2
+
+    1)  When installing under OS/2, WinOS/2 should be run in either
+        a full screen WinOS/2 session, or from Program Manager.
+        Also, the session must be in Enhanced Mode rather than 
+        Standard.  To check this, see the WinOS/2 settings for
+        the appropriate icon.  Note that if run from a full screen
+        session (preferred), near the end of the installation,
+        focus will switch to the OS/2 desktop as a DOS program is
+        run; when this program exits, OS/2 will not return the
+        focus back to the WinOS/2 session, you will need to do
+        this manually.
+
+    2)  WINRUN.EXE will be installed in your StartUp Program
+        Manager group.  Because OS/2 (as of version 3.0) does
+        not provide support for Windows VxDs, WINRUN.EXE will
+        issue an error message and fail to load.  Simply remove
+        it from the StartUp group to prevent future error messages.
+
+G) Installing Under Windows NT
+    
+    1) Under Windows NT, To allow for the proper execution of OLE
+    applications that use .DLLs in the TCW "bin" directory,
+    you must update the system path.  To modify the system
+    path, you must have Administrator privileges or login
+    as the Administrator.
+
+        To update the system path,
+        1)  In Program Manager, double-click the Control Panel
+            icon.
+        2)  In the Control Panel group, double-click the System
+            icon.
+        3)  In the System Environment Variable box, select the
+            "Path=" statement.
+        4)  In the Value box, add the path to the Turbo C++
+            "bin" directory.  For example, if you installed 
+            Turbo C++ in the C:\TCWIN45 directory, type
+            C:\TCWIN45\BIN at the end of the path statement.
+        5)  Choose Set.
+        6)  Choose OK.
+
+    2) If you install Turbo C++ 4.5 from a shared read-only network 
+    drive under Windows NT, the Install program will not open
+    the INSTALL.TXT and README.TXT files.  Look for them in
+    your TCWIN45 directory after Install finishes.
+
+    3) The Acrobat reader does not support Windows NT.  All the
+    information in the online books is also in the online Help.
+
+    4) For help removing Pipeline's call to REMIND.EXE, see
+    the Pipeline comments below.
+
+H) Avoid Extended Characters in Path Names
+
+    If you use extended ASCII characters (with numbers over
+    127) in the path names for installing TCW, the Install
+    program will not correctly update you AUTOEXEC and INI
+    files.
+
+I) Installing Adobe Acroread
+
+    To use the online documentation, you must run two
+    installation programs: INSTALL.EXE to install Turbo
+    C++ with its online book files, and ACROREAD.EXE
+    to install the viewer that lets you read the book
+    files.
+
+    The Turbo C++ install program asks where you will put the 
+    Adobe viewer during its installation. The default answer
+    is C:\ACROREAD.  Be sure to remember the viewer directory
+    when you run ACROREAD.EXE.
+
+    To install the Adobe viewer, run the ACROREAD.EXE 
+    found in the INSTALL directory (not the one in the
+    ACROREAD directory.)
+
+
+SECTION -3- TROUBLESHOOTING INSTALLATION PROBLEMS
+=================================================
+
+This section explains common errors encountered during
+installation. System configuration and software conflicts
+might cause the installation process to fail. If the
+installation fails, follow the instructions in Section 1
+on how to boot clean.  This will eliminate many possible
+software conflicts.  Also, check the integrity of the file
+systems on your hard drive using a utility like CHKDSK or
+SCANDISK; proceeding with an installation while file system
+errors are present increases the risk of a failure resulting in
+data loss.  If these two steps do not solve the
+problem, or you encounter a problem not mentioned here, 
+contact Borland Technical Support.
+
+A)  Internal Error, Unable to Start Install
+
+    1) Error -2:  The install program was unable to create a
+    temporary directory needed for the installation.  Check that
+    if you have either TMP or TEMP set as environment variables
+    that they point to a valid directory on a drive with at least
+    two megabytes of free space (four megabytes if you are using
+    disk compression).  If you do not have a TMP or a TEMP
+    environment variable set, the install will place its
+    temporary files in the directory WINDOWS\TEMP.  
+
+    You will also see Error -2 if the Install program
+    cannot create this directory--if, for example, there
+    is already a file called TEMP in your WINDOWS
+    directory, or if your Windows drive does not have two
+    megabytes of free space.
+    
+    2) Error -3:  There was an error while copying and decompressing
+    the file INSTRUN.EXE, which is used to launch phase two of
+    the installation.  Check that there is sufficient free space
+    in your temporary directory (see above) and boot the machine
+    clean.  Also, a hard drive installation is often helpful.
+
+    3) Error -69:  The execution of INSTRUN.EXE (phase two of
+    the installation process) failed.  Probable causes:  file
+    corruption (see above), memory corruption (see the section on
+    booting clean).
+
+B)  Data Integrity or Bad Sector on Disk Errors
+
+    If you receive either one of these error messages, you
+    may need to get a replacement disk set. If running a
+    disk checking utility (such as "chkdsk" or "scandisk") 
+    reports a bad sector or data integrity problem contact
+    Borland's Disk Replacement Line at (800-621-3132). 
+    Otherwise, see the Section 1 on booting clean, and if 
+    the problem persists, contact Borland Technical Support
+    (408-461-9133) for further assistance.
+
+    Outside the US, contact your local Borland representative.
+
+C) Install Program Terminates Prematurely 
+
+   If the install program stops for no apparent reason without 
+   error messages, it is possible that certain support files
+   are write protected. To check this, do the following:
+
+          1) Go to your WINDOWS directory
+          2) Type  attrib *.*
+          3) Check for the "r" attribute. If any file has this
+             flag set, then you must clear it by typing:
+                     attrib -r <filename>
+          4) Repeat steps 2-3 for the WINDOWS\SYSTEM directory.
+
+D)  General Protection Fault/Unhandled Exception 
+
+    If you encounter a General Protection Fault or Unhandled
+    Exception during installation, try the following steps:
+
+    - Make sure your system meets the minimum requirements.
+      Refer to Section 0 for a list of the minimum
+      installation requirements.
+
+    - Boot your system with a clean configuration. Refer to
+      Section 1 for instructions on how to boot clean.
+
+    - Perform an integrity check on your hard drive, using
+      a utility such as "SCANDISK" or "CHKDSK".
+
+    - Turn off Disk Caching and Video/Shadow RAM in CMOS.
+      Refer to the documentation for your computer.
+
+
+
+SECTION -4- CD-ROM INFORMATION
+==============================
+
+This section discusses a few issues that pertain specifically to
+using TCWIN45 from a CD-ROM.  If you did a "full installation", this
+section is not relevant.
+
+A)  "Drive not ready" When Starting Windows
+
+At startup, Windows will check the status of all of the drives
+listed in your PATH.  If a CD is not loaded in your CD-ROM drive
+at this time, Windows will complain that the drive is not ready.
+The following steps will minimize the number of "Drive not ready"
+errors related to using TCWIN45 from your CD, and will also ensure
+that when starting Windows the contents of the CD loaded in your
+drive will not be important.
+
+    1)  Edit your AUTOEXEC.BAT file, and ensure that the
+    \TCWIN45\BIN directory on the CD is the last element of your
+    path.  You will likely find a line that reads:
+
+            PATH D:\TCWIN45\BIN;%PATH%
+
+    Change it to:
+
+            PATH %PATH%;D:\TCWIN45\BIN
+
+    and be sure that it is the last line in the file that sets
+    any component of your path.
+        
+    2)  Copy the files WINDPMI.386 and WINRUN.386  from the
+    \TCWIN45\BIN directory on the CD to your configuration 
+    file directory and modify your WINDOWS\SYSTEM.INI file. For
+    example,
+
+           COPY D:\TCWIN45\BIN\WINDPMI.386 C:\TCWIN45\BIN
+           COPY D:\TCWIN45\BIN\WINRUN.386  C:\TCWIN45\BIN
+
+    Be sure to modify your Windows SYSTEM.INI file to reflect
+    these changes. For example, change:
+
+           [386Enh]
+           device=D:\TCWIN45\BIN\WINDPMI.386
+           device=D:\TCWIN45\BIN\WINRUN.386
+    to:
+           [386Enh]
+           device=C:\TCWIN45\BIN\WINDPMI.386
+           device=C:\TCWIN45\BIN\WINRUN.386
+
+B) Difficulty Finding Files
+
+If you're experiencing difficulty finding files when running
+TCWIN45, check your PATH statement.  Although having the PATH
+statement point to the CD-ROM drive all the time will cause
+Windows to complain "Drive not ready" if a CD is not in the
+CD-ROM drive, sometimes when compiling if the CD-ROM drive is not
+on the PATH and the files that are needed are on the TCWIN45 CD, the
+compiler will not be able to find those files. Thus you might
+need to add the CD Drive to your PATH; to minimize complaints
+with "Drive not ready" errors, be sure that it is at the end.  If
+the path is correct, make sure your project directories are
+valid. If you are relying on the CD-ROM drive to provide certain
+library files, make sure the appropriate drive/path combination
+is present in the directories section of your project.  
+
+C)  Compiling and Running the Examples
+
+All of the example projects will write their output by default to
+the current directory.  While this is ideal when the examples are
+installed to the hard drive, the read-only nature of a CD-ROM
+will cause the compilation to fail.  To use any of the examples,
+follow these steps:
+
+    1) Open the project file for the example you wish to run.
+    2) Select Options|Project
+    3) Set the temporary and final output directories to a
+       writeable location.
+
+
+SECTION -5- PIPELINE AUTOMATIC REGISTRATION
+===========================================
+
+The installation program for this field test launches a
+program from Pipeline to help customers register with
+Borland. The Pipeline program asks for your name, address,
+and other information.  It then allows you to submit your
+registration information by modem or to print it out and
+mail it in yourself. 
+
+To register by modem, Pipeline dials a toll-free 800
+number.  Pipeline does not send any information other than
+what it displays for you as it runs, nor does it create
+hidden files on your machine.  If you choose not to
+register at installation, Pipeline sets up automatic
+reminders every 14 days asking if you would like to
+register yet.
+
+The reminder feature can be disabled from your WIN.INI
+setting.  Removing the reminder under Windows NT requires
+editing the system registry.
+
+Begin by launching the Registry Editor, REGEDT32.EXE,
+located in your SYSTEM32 directory.  Select the 
+HKEY_CURRENT_USER window and go into the folder
+
+    hkey_current_user/Software/Microsoft/Windows NT/
+         CurrentVersion/Windows
+
+There you'll see a "load:" line with the path to
+REMIND.EXE.  Double click on that line and delete it.
+
+
+SECTION -6- HOW TO GET A TECHNICAL INFORMATION DOCUMENT
+=======================================================
+
+Technical Information Documents contain tips, techniques, 
+and enhanced information on using Borland development tools,
+and information on commonly asked programming questions.  
+Such documents often include programming examples.  
+ 
+Here is a list of commonly requested Technical Information Documents:
+
+      * 3       General Catalog of All C/C++ Documents Available
+      * 649     General Protection Faults
+      * 738     Memory Corruption
+      * 1171    Problem Report Form
+      * 1561    Clean Boot
+      * 1738    Network Installations
+
+
+A)  From within the US, fax the document from Borland's TechFax 
+Service.
+
+Call (800) 822-4269 from a touch-tone phone. When prompted, enter
+your FAX number, then enter the document number you want to
+receive. The document will be faxed to you shortly.
+
+
+B)  Download the document.  The file name for document number NNN
+would be tiNNN.zip.
+
+   -The Borland Download Bulletin Board Service (DLBBS)
+        (408) 431-5096, protocol 8N1
+
+    [When downloading files from the DLBBS, you will
+    need to select the appropriate "conference" from
+    the main menu.]
+
+   -The Borland Automated Online Service (OAS)
+        (408) 431-5250, protocol 8N1
+
+   -The Borland World Wide Web server
+        http://www.borland.com
+
+   -The Borland FTP site on the Internet
+        ftp.borland.com (IP address: 143.186.15.10)
+
+    [all file names are case-sensitive on the FTP
+    site, and almost always lower-case.]
+
+   -Borland-supported forums on CompuServe and Genie.
+        for CIS type: go BCPPWIN or and choose library 2
+        for GENIE type: Borland
+
+With rare exception, all files on the DLBBS and FTP site will be
+compressed with a PKZIP 2.04 (or later) compatible archiver.  If
+you do not have a version of PKZIP, you can download the file
+pkz204g.exe; execute this file in an empty directory to extract
+pkunzip.exe.
+
+
+                   *** END OF FILE INSTALL.TXT ***
