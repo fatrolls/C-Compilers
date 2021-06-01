@@ -19,7 +19,7 @@ and also
 ID Automation Code 39 (Barcode Generator Installer)
 
 
-
+```
       ÜÜÜÜÜÜ   ÜÜÜÜÜÜ
       Û°ÜÜÜÛ   ÛÛÛÛÛÛ     ÜÜÛÛÛÛÛÛÛÛÛÛÛ
       Û±ÛÛÛÛ   ÛÛÛÛÛÛ   ÜÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
@@ -166,4 +166,4 @@ ID Automation Code 39 (Barcode Generator Installer)
  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
   
  [-----------------  X-FORCE 1997 SMOKING THE COMPETITION  --------04/25/97-]
-
+```
