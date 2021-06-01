@@ -1,7 +1,9 @@
 This is installer for Turbo C++ v4.5 (1995 Year)
 
-Borland Turbo C++ 4.5
-For Windows
+Borland Turbo C++ 4.5 (32-bit compiler) (05/07/1997)
+
+
+**For Windows**
 
 **Installation:**
 If the Install program hung after you read the INSTALL.TXT, reboot the system. Install again but this time choose to "SKIP" the INSTALL.TXT. 
