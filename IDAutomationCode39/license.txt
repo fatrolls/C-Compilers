@@ -1,0 +1,48 @@
+IDAutomation.com, Inc. Free Code 39 Font License Agreement
+
+This font may only be used for personal use and by organizations that are non-profit, educational or have a gross annual revenue of less than $250,000 USD. Any other use requires a purchase of our Code 39 Font Advantage Package which contains all letters and symbols in addition to numbers.
+
+This font does not contain the characters A-Z, just the numbers and symbols. If you need to encode letters in barcodes or if you need this font in Macintosh, PCL, laserjet soft font, PostScript (type 1) Binary or ASCII formats, you will need to purchase our Code 39 Font Advantage Package.
+
+By using or installing any software product created by IDAutomation.com, Inc. (including fonts, components, encoders, source code, macros, controls, DLLs and the corresponding documentation)  (hereafter referred to as "Software"), you are agreeing to be bound by the terms and conditions of this License Agreement. As used in this License Agreement, “You” shall mean the individual using or installing the Software together with any individual or entity, including but not limited to your employer, on whose behalf you are acting in using or installing the Software. You shall be the “Licensee” under this License Agreement. This License Agreement constitutes the complete agreement between you and IDAutomation.com, Inc. No amendment or modification may be made to this Agreement except in writing signed by you and IDAutomation.com, Inc. If you do not agree to the terms and conditions of the Agreement, discontinue use of the Software immediately.
+
+1. License Grant 
+IDAutomation.com, Inc. grants to You only, the Licensee, the non-exclusive, nontransferable right to use the Software provided that the Software is only used for personal use and by organizations that are non-profit, educational or have a gross annual revenue of less than $250,000 USD. Any other use requires a purchase of our Code 39 Font Advantage Package which contains all letters and symbols in addition to numbers. If You are using this product for your employer, this agreement also includes your employer.
+
+1.1 Distribution with an Application
+The Software may not be distributed with an application or an application's installation files. This type of distribution requires a Developers License to our Code 39 Font Advantage Package or the EZ Barcode Font Package. Developers may also create a distributed application to access the IDAutomationHC39M font name and request that users download this free font only if they meet the license qualifications of the free font. If they do not meet the license qualifications, they must be instructed to purchase our Code 39 Font Advantage Package or the EZ Barcode Font Package which both include the IDAutomationHC39M font. Developers may also use our affiliate program to make a 30% commission on fonts that are purchased from us for their programs.
+
+1.2 Distribution without an Application
+This Software may only be redistributed with the associated and unmodified license agreement, installation and readme files. This Software can be bundled with any commercial package, CD ROM, distributed by itself, and can be accompanying books or magazines all files are included and the files are not tampered with in any way. A reasonable fee may be charged by the distributor to cover costs of media and shipping & handling.   
+
+2. Copyright
+The IDAutomation.com, Inc. Software and the accompanying materials are copyrighted and contain proprietary information. Unauthorized copying of the Software or accompanying materials even if modified, merged, or included with other software, or of the written materials, is expressly forbidden. You may be held legally responsible for any infringement of intellectual property rights that is caused or encouraged by your failure to abide by the terms of this Agreement. You may make copies of the Software solely for backup purposes provided the copyright and trademark notices are reproduced in their entirety on the backup copy. IDAutomation.com, Inc. reserves all rights not specifically granted to Licensee.
+
+IDAutomation.com, Inc. warrants to you that IDAutomation.com, Inc. is the sole owner of all patents, copyrights or other applicable intellectual property rights in and to the Software unless otherwise indicated in the documentation for Software. IDAutomation.com, Inc. shall defend and hold Licensee harmless from any third party claims for intellectual property infringement for Software provided by IDAutomation.com, Inc.
+
+The Software and documentation are licensed, not sold, to you. You may not rent, lease, display or distribute copies of the Software to others except under the conditions of the Corporate Distribution License. You may not disassemble, decompose, reverse engineer, or alter the Software.
+
+Third Parties: You may send a copy of any IDAutomation.com, Inc. Software along with your documents to a commercial printer or other service bureau to enable the editing or printing of your document, provided that such party has informed you that it owns a valid license to use the Software.
+
+3. Font Conversions and Embedding
+IDAutomation.com, Inc. grants you the right to convert the fonts provided to other formats as necessary provided you own a Corporate Distribution License for the font and you adhere to the following terms: 
+The copyright notices must not be extracted from the converted fonts. If, after the conversion process the copyright notice is not present in the converted font, you must add it back in if possible. If it is not possible to add the copyright notice in the font, You must provide the following copyright notice in the documentation provided with the font "The <<name of font and / or component>> technology provided in this product is copyrighted by IDAutomation.com, Inc.".
+
+You may only embed fonts in pdf documents on the public Internet if you purchase a Corporate Distribution License for the font and You do not encourage users to extract the properties of the embedded fonts.
+Exact Web pages or domains must be specified when creating embedded fonts such as TrueDoc or OpenType to limit their use to the application they are needed for.
+
+4. Termination
+This Agreement is effective until terminated. This Agreement will terminate automatically without notice from IDAutomation.com, Inc. if you fail to comply with any provision contained herein or if the funds paid for the license are  refunded or are not received. Upon termination, you must destroy the Software, and all copies of them, in part and in whole, including modified copies, if any.  If you have distributed Software with an application under the Corporate Distribution License, you may continue to use said Software for up to 90 days after termination.
+
+5. Warranty & Risks
+Although efforts have been made to assure that the Software is correct, reliable, and technically accurate, the Software is licensed to you as is and without warranties as to performance of merchantability, fitness for a particular purpose or use, or any other warranties whether expressed or implied. You, your organization and all users of the Software, assume all risks when using it. The manufacturers, distributors and resellers of the Software shall not be liable for any consequential, incidental, punitive or special damages arising out of the use of or inability to use the Software or the provision of or failure to provide support services, even if we have been advised of the possibility of such damages. In any case, the entire liability under any provision of this agreement shall be limited to the greater of the amount actually paid by You for the Software or $1.00 USD.
+
+5. Technical Support
+Because this is a free product we cannot offer any other support than what is documented at the website. Phone and email support are only provided for users that purchase our products.
+
+7. Controlling Law and Severability
+This License Agreement shall be governed by and construed in accordance with the laws of the United States and the State of Florida, as applied to agreements entered into and to be performed entirely within Florida between Florida residents. The courts of the State of Florida, County of Hillsborough, shall have exclusive jurisdiction and venue over any dispute, proceeding or action arising out of or in connection with this License Agreement or your use of the Software. If, for any reason, a court of competent jurisdiction finds any provision of this License Agreement, or portion thereof, to be unenforceable, that provision of the License Agreement shall be enforced to the maximum extent permissible so as to effect the intent of the parties, and the remainder of this License Agreement shall continue in full force and effect.
+
+8. Non-Waiver
+The failure by either party at any time to enforce any of the provisions of this License Agreement or any right or remedy available hereunder or at law or in equity, or to exercise any option herein provided, shall not constitute a waiver of such provision, right, remedy or option or in any way affect the validity of this License Agreement. The waiver of any default by either party shall not be deemed a continuing waiver, but shall apply solely to the instance to which such waiver is directed.
+
