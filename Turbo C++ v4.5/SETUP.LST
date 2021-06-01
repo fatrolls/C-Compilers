@@ -1,0 +1,26 @@
+[Params]
+	WndTitle   = Video for Windows 1.1 Runtime
+	WndMess    = Initializing Setup...
+	TmpDirSize = 500
+	TmpDirName = ~msstfqf.t
+	CmdLine    = _mstest setup.mst /C "/S %s %s"
+	DrvModName = DSHELL
+
+[Files]
+	setup.mst  = setup.mst
+	setup.in_  = setup.inf
+	setupapi.in_ = setupapi.inc
+	msdetect.in_ = msdetect.inc
+	mscpydis.in_ = mscpydis.inc
+	mscpydis.dl_ = mscpydis.dll
+	mscomstf.dl_ = mscomstf.dll
+	msinsstf.dl_ = msinsstf.dll
+	msuilstf.dl_ = msuilstf.dll
+	msshlstf.dl_ = msshlstf.dll
+	mscuistf.dl_ = mscuistf.dll
+	msdetstf.dl_ = msdetstf.dll
+	iniupd.dl_   = iniupd.dll
+	_mstest.ex_  = _mstest.exe
+	_mssetup.ex_ = _mssetup.exe
+	profdisp.ex_ = profdisp.exe
+

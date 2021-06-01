@@ -1,0 +1,301 @@
+'**************************************************************************
+'*                  VfW 1.1 Runtime Setup
+'**************************************************************************
+'$INCLUDE 'setupapi.inc'
+'$INCLUDE 'mscpydis.inc'    ''System
+'$INCLUDE 'msdetect.inc'    ''Detects Avalilable Disk Space
+
+''Dialog ID's
+CONST WELCOME       = 100
+CONST ASKQUIT       = 200
+CONST EXITFAILURE   = 400
+CONST EXITQUIT      = 600
+CONST EXITSUCCESS   = 700
+CONST APPHELP       = 900
+CONST CHECK         = 2500
+CONST SMALLWIN      = 2200
+CONST RESTART       = 2600
+CONST RESTARTII     = 2700
+
+''Bitmap ID
+CONST LOGO = 1
+
+GLOBAL SizeReq&  '' Total Disk Size required for installation
+
+''File Types
+GLOBAL WinDir$
+GLOBAL WinSysDir$
+GLOBAL WinSys32Dir$
+GLOBAL WINDRIVE$    ''Windows Drive Letter.
+GLOBAL CHECKSTATES$
+GLOBAL MinorVer%
+GLOBAL OnNT$
+
+DECLARE SUB Install
+DECLARE FUNCTION MakePath (szDir$, szFile$) AS STRING
+DECLARE FUNCTION OnWindowsNT LIB "INIUPD.DLL" AS INTEGER
+DECLARE FUNCTION VflatdPresent LIB "iniupd.DLL" AS INTEGER
+DECLARE SUB Reboot LIB "iniupd.dll"
+DECLARE fUNCTION ExitWindowsExec  LIB "User" (Exec$, Param$) AS INTEGER
+
+INIT:
+  
+    CUIDLL$ = "mscuistf.dll"            ''Custom user interface dll
+    HELPPROC$ = "FHelpDlgProc"          ''Help dialog procedure
+    
+    WIN32ENABLED% = 0
+    MajorVer% = GetWindowsMajorVersion()
+    MinorVer% = GetWindowsMinorVersion()
+    Processor% = GetProcessorType()
+    WinDir$ = GetWindowsDir()
+    DEST$ = GetWindowsDir()
+    WinSysDir$ = GetWindowsSysDir()
+    WinSys32Dir$ = WinDir$ + "system32"
+
+    IF MajorVer% < 3 OR (MajorVer% = 3 AND MinorVer% < 10) THEN
+	i% = DoMsgBox("Microsoft Windows version 3.10 or greater is required for this software.  Please upgrade your version of Windows.", "Installation Problem", MB_OK+MB_TASKMODAL+MB_ICONHAND)
+	END
+    END IF
+
+    'Prevents installation on 286
+    IF Processor% < 3 THEN
+	i% = DoMsgBox("Video for Windows requires a 386 or greater processor or emulator.", "Installation Problem", MB_OK+MB_TASKMODAL+MB_ICONHAND)
+	END
+    END IF
+
+    ' Use Wowexec to determine version of NT.  3.1 did not stamp wowexec and wow returns 3.1 as version
+    IF OnWindowsNT() THEN
+	  OnNT$ = "TRUE"
+	  WowVersion$ = GetVersionOfFile(WinSys32Dir$ + "\wowexec.exe")
+	  IF WowVersion$ = "" THEN
+	     i% = DoMsgBox("Video for Windows does not run on Windows NT 3.1.  Please upgrade your version of Windows.", "Installation Problem", MB_OK+MB_TASKMODAL+MB_ICONHAND)
+	     END
+	  END IF
+    END IF
+
+    SetBitmap CUIDLL$, LOGO
+    SetTitle "Video for Windows 1.1 Runtime"
+
+    szInf$ = GetSymbolValue("STF_SRCINFPATH")
+    IF szInf$ = "" THEN
+       szInf$ = GetSymbolValue("STF_CWDDIR") + "SETUP.INF"
+    END IF
+    ReadInfFile szInf$
+
+    WINDRIVE$ = MID$(GetWindowsDir, 1, 1)
+
+WELCOME:
+    sz$ = UIStartDlg(CUIDLL$, WELCOME, "FInfoDlgProc", APPHELP, HELPPROC$)
+    IF sz$ = "CONTINUE" THEN
+       UIPop 1
+     ELSE
+	GOSUB ASKQUIT
+	GOTO WELCOME
+    END IF
+
+''Prepare Copy list and check size
+
+    ClearCopyList
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+
+''  Runtime files (on Windows disk)
+''  Do not install OLE or MPlayer if on next release of NT or Windows
+
+    IF ((NOT OnNT$ = "TRUE") AND MinorVer% < 50) THEN			'These files not necessary on Windows NT
+	AddSectionFilesToCopyList "MPlayer", SrcDir$, WinDir$
+	AddSectionFilesToCopyList "OLE2", SrcDir$, WinSysDir$
+    END IF
+    AddSectionFilesToCopyList "VfW Runtime", SrcDir$, WinSysDir$
+    AddSectionFilesToCopyList "ACM Drivers", SrcDir$, WinSysDir$
+    AddSectionFilesToCopyList "AVICodecs", SrcDir$, WinSysDir$
+    IF OnNT$ = "TRUE" THEN
+	AddSectionFilesToCopyList "NT MSVideo", SrcDir$, WinSys32Dir$
+    ENDIF
+''*************************************************************************************************************************
+''*************************************************************************************************************************
+''To add a DCI provider, please un-comment the AddSectionFilesToCopyList.
+''
+''	AddSectionFilesToCopyList "DCI Provider", SrcDir$, WinSysDir$
+''*************************************************************************************************************************
+''*************************************************************************************************************************
+
+''  Check windrive diskspace
+    SizeReq& = GetCopyListCost ("","", "")
+    IF SizeReq& <> 0 THEN
+	GOSUB SMALLWIN
+	END
+    END IF
+
+Install
+
+'' Added for Paradox CDROM install. SETUP being called by another install.
+
+GOTO SKIPRESTART
+
+'' Restart Windows: if it has to updates ACM from DOS, it restarts Windows automatically
+'' else, it gives the user the choice
+    RESTRT% = RestartListEmpty ()
+    Exe$ = DEST$ + "\_msrstrt.exe"
+    Batch$ = DEST$ + "\_mssetup.bat"
+    empty$ = ""
+RESTART:
+    IF RESTRT% = 0 THEN
+       sz$ = UIStartDlg(cuidll$, RESTART, "FInfo0DlgProc", 0, "")
+       IF sz$ = "REACTIVATE" THEN
+	  GOTO RESTART
+       ENDIF
+       I% = ExitExecRestart ()
+       RemoveFile Exe$, cmoForce
+       RemoveFile Batch$, cmoForce
+       END
+    ELSE
+       sz$ = UIStartDlg(CUIDLL$, RESTARTII, "FQuitDlgProc", 0, "")
+       IF sz$ = "CONTINUE" THEN
+	  I% = ExitWindowsExec (Exe$, empty$)
+	  IF I% = 0 THEN
+	     GOTO RESTART
+	  ELSE
+	     END
+	 ENDIF
+       ELSEIF sz$ = "EXIT" THEN
+	  UIPopAll
+	  END
+       ELSEIF sz$ = "REACTIVATE" THEN
+	  GOTO RESTART
+       ELSE
+	  UIPop 1
+       END IF
+    END IF
+
+SKIPRESTART:
+
+QUIT:
+    ON ERROR GOTO ERRQUIT
+
+    IF ERR = 0 THEN
+	dlg% = EXITSUCCESS
+    ELSEIF ERR = STFQUIT THEN
+	dlg% = EXITQUIT
+    ELSE
+	dlg% = EXITFAILURE
+    END IF
+QUITL1:
+    sz$ = UIStartDlg(CUIDLL$, dlg%, "FInfo0DlgProc", 0, "")
+    IF sz$ = "REACTIVATE" THEN
+	GOTO QUITL1
+    END IF
+    UIPop 1
+    END
+
+ERRQUIT:
+    i% = DoMsgBox("An installation problem occured, call the product support service", "Setup Problem", MB_OK+MB_TASKMODAL+MB_ICONHAND)
+    END
+
+
+ASKQUIT:
+    sz$ = UIStartDlg(CUIDLL$, ASKQUIT, "FQuitDlgProc", 0, "")
+
+    IF sz$ = "EXIT" THEN
+	UIPopAll
+''        ERROR STFQUIT
+	END
+    ELSEIF sz$ = "REACTIVATE" THEN
+	GOTO ASKQUIT
+    ELSE
+	UIPop 1
+    END IF
+    RETURN
+
+SMALLWIN:
+    sz$ = UIStartDlg(CUIDLL$, SMALLWIN, "FInfo0DlgProc", 0, "")
+    IF sz$ = "REACTIVATE" THEN
+	GOTO SMALLWIN
+    END IF
+    UIPop 1
+    RETURN
+
+'**
+'** Purpose:
+'**     Performs all installation operations.
+'** Arguments:
+'**     none.
+'** Returns:
+'**     none.
+'*************************************************************************
+SUB Install STATIC
+
+    SetRestartDir WinDir$
+    CopyFilesInCopyList
+
+''Updating WIN.INI and SYSTEM.INI
+''Only update SYSTEM.INI  on NT or next version of Windows for other codecs
+
+IF ((NOT OnNT$ = "TRUE") AND MinorVer% < 50) THEN
+    IF VflatdPresent() = 0 THEN
+       CreateSysIniKeyValue WinDir$ + "system.ini", "386Enh", "device", "dva.386", cmoOverwrite
+    END IF
+END IF
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.CVID", "iccvid.drv", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.MSVC", "msvidc.drv", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.IV32", "ir32.dll", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.IV31", "IR32.dll", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.MRLE", "MSRLE.drv", cmoOverwrite
+    I% = DoesIniKeyExist ("system.ini", "Drivers", "VIDC.RT21")
+    IF I% = 0  THEN
+       CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.RT21", "ir21_r.dll", cmoOverwrite
+    END IF
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "VIDC.YVU9", "ir21_r.dll", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "WIN.INI", "mci extensions", "avi", "AVIVideo", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "mci", "AVIVideo", "mciavi.drv", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "WaveMapper", "msacm.drv", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "MSACM.msadpcm", "msadpcm.acm", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "MSACM.imaadpcm", "imaadpcm.acm", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "control.ini", "drivers.desc", "msacm.drv", "Microsoft Sound Mapper V2.00", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "control.ini", "drivers.desc", "msadpcm.acm", "Microsoft ADPCM Codec V2.00", cmoOverwrite
+    CreateIniKeyValue WinDir$ + "control.ini", "drivers.desc", "imaadpcm.acm", "Microsoft IMA ADPCM Codec V2.00", cmoOverwrite
+
+''*************************************************************************************************************************
+''*************************************************************************************************************************
+''To add a DCI provider, please un-comment the UDH line, and un-comment and replace the	<provider> with your own file name
+''
+''  CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "DCI", "udh.dll", cmoOverwrite
+''  CreateIniKeyValue WinDir$ + "system.ini", "Drivers", "vids.draw", "<provider>", cmoOverwrite
+''*************************************************************************************************************************
+''*************************************************************************************************************************
+
+''Do not register components not installed with Video for Windows on NT or next version of Windows.
+IF ((NOT OnNT$ = "TRUE") AND MinorVer% < 50) THEN
+    Run ("regedit.exe /s " + MakePath(WinDir$, "mplayer.reg"))
+    Run ("regedit.exe /s " + MakePath(WinSysDir$, "OLE2.reg"))
+    Run ("regedit.exe /s " + MakePath(WinSysDir$, "cleanup.reg"))
+
+'' Mplayer
+    CreateProgmanItem "Accessories", "Media Player", MakePath(WinDir$, "mplayer.exe"), "", cmoOverwrite
+
+END IF	''NT and next version of Windows installation stop here.
+
+    Run ("profdisp.exe")   
+END SUB
+
+'**
+'** Purpose:
+'**     Appends a file name to the end of a directory path,
+'**     inserting a backslash character as needed.
+'** Arguments:
+'**     szDir$  - full directory path (with optional ending "\")
+'**     szFile$ - filename to append to directory
+'** Returns:
+'**     Resulting fully qualified path name.
+'*************************************************************************
+FUNCTION MakePath (szDir$, szFile$) STATIC AS STRING
+    IF szDir$ = "" THEN
+	MakePath = szFile$
+    ELSEIF szFile$ = "" THEN
+	MakePath = szDir$
+    ELSEIF MID$(szDir$, LEN(szDir$), 1) = "\" THEN
+	MakePath = szDir$ + szFile$
+    ELSE
+	MakePath = szDir$ + "\" + szFile$
+    END IF
+END FUNCTION
+
