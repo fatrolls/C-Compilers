@@ -1,0 +1,167 @@
+*******************************************************
+* Welcome to Visual Database Tools in Borland C++ 5.0 *
+*******************************************************
+
+This README file contains important information about the Visual 
+Database Tools (VDBT) in BORLAND C++ 5.0.
+
+************************
+* README FILE CONTENTS *
+************************
+
+ * Important Notice
+
+ * Configuration and System Requirements
+
+ * Installation Instructions
+
+ * BDE Configuration Notes
+
+********************
+* Important Notice *
+********************
+
+Borland highly recommends that you investigate one of the following resources
+as soon as you have installed your new Borland C++ 5.0 product:
+
+World WideWeb:  http://loki.borland.com/cpp/patchs.htm
+CIS:            GO BCPP, section 3, "From Borland"
+FTP:            ftp.borland.com
+BBS:            (408)431-5096. 8-N-1 (I bits, No parity, 1 stop bit)
+Listserv:       listserv@borland.com  Send an email message containing this text:
+                SUBSCRIBE<space>BCPP<space>FIRSTNAME<space>LASTNAME
+
+This is crucial to our efforts to provide you with the most comprehensive product 
+information, updates, and service possible with this new release of Borland C++ and
+its associated products.
+
+For more information on contacting Borland and support services offered by Borland,
+please read the file 'README.TXT' in your \BC5 directory.
+
+*****************************************
+* CONFIGURATION AND SYSTEM REQUIREMENTS *
+*****************************************
+Please refer to the file README.TXT in the \BC5 directory on your 
+Borland C++ 5.0 CD.
+
+*****************************
+* INSTALLATION INSTRUCTIONS *
+*****************************
+
+VDBT is installed as part of the BC5 install. Please refer to 
+the file README.TXT in the \BC5 directory on your CD.
+
+This install will automatically install the 32-bit version of the 
+Borland Database engine. If you require the shipping 16-bit version, 
+please run SETUP.EXE from the SETUP\IDAPI16 directory. 
+
+  * 16 BIT BORLAND DATABASE ENGINE
+
+  Procedure
+  ---------
+
+  Most times you will be installing VDBT on a machine that already contains 
+  the 16 bit BDE software. The 16-bit release of BDE contained in VDBT is the 
+  certified, shipping release, rev 2.51.
+
+  To use VDBT on a machine which has an installation of a Borland product 
+  which already contains the BDE:
+
+  1) Install BC5.0 with VDBT
+
+  2) Run setup.exe from the SETUP\IDAPI16 directory on your BC5.0 CD.
+
+  3) Placement of BDE files:
+    
+  If you are installing VDBT on a workstation that already contains a copy of the 
+  Borland Database Engine, install VDBT's BDE files to the same directory. Normally 
+  this directory is called \IDAPI.
+    
+  If you have an existing installation of the BDE, the installation program copies 
+  your default BDE configuration file to whatever location you specified for your 
+  VDBT BDE files.  (Your default BDE configuration file is specified in the BDE 
+  section of your WIN.INI file as CONFIGFILE01.) 
+    
+  If the CONFIGFILE01 setting does not exist in your WIN.INI and you do not have an 
+  IDAPI.CFG file, a new IDAPI.CFG file is created in the same directory where you 
+  installed your VDBT BDE files. The installation program changes the CONFIGFILE01 
+  setting to point to IDAPI.CFG at this new location.
+
+  *  32 BIT BORLAND DATABASE ENGINE
+
+  Procedure
+  ---------
+  This is automatically installed as part of the BC5.0 install. 
+
+  If you are upgrading a Windows 3.1 Installation, the SETUP program 
+  will detect and upgrade your existing configuration if you have one. 
+  We recommend that you back up your configuration first before installing 
+  this software.
+
+  Upgrading Configuration Files
+  -----------------------------
+
+  WIN.INI parameters and system and driver configuration information 
+  from the IDAPI.CFG file have been moved to the Registry on 
+  WinNT and Win95.  The information remaining in the IDAPI.CFG 
+  file is the alias information.
+  If you have an existing IDAPI.CFG file that you want to merge 
+  into the registry, you can use the BDECFG32.EXE utility to 
+  import the IDAPI.CFG file.  Follow these steps:
+
+     i)   Run BDECFG32.EXE.
+     ii)  Select the File|Open menu item.In the Open File dialog 
+          box, select the IDAPI.CFG file you wish to merge into 
+          the registry.
+     iii) Once the file is loaded, select the File|Save option.
+     iv)  A dialog box appears, titled "Save configuration file".  
+          If you select "Save for only 32bit applications", the 
+          utility will copy system and driver information to the 
+          registry and remove it from the IDAPI.CFG file.  The 
+          IDAPI.CFG file will no longer be usable by a 16-bit 
+          Windows 3.1 program.
+          If you select "Save for both 16bit and 32bit applications", 
+          the utility will copy system and driver information to 
+          the registry and also write the information to the .CFG 
+          file. This way, the IDAPI.CFG file will be usable by 
+          both 16-bit and 32-bit programs.
+     V)   If your IDAPI.CFG file contained aliases, those aliases 
+          will still be in the IDAPI.CFG file.
+    
+************************************************************
+* 16-BIT BORLAND DATABASE ENGINE (BDE) CONFIGURATION NOTES *
+************************************************************
+
+If another 16-bit BDE-based product is already running when you 
+start VDBT, VDBT will use the BDE configuration file that is 
+already active. 
+    
+Choose the BDE Configuration Utility icon from Windows Program Manager 
+to edit the configuration file. When you open the utility it will display 
+the IDAPI.CFG specified in the IDAPI section of the WIN.INI file. If you 
+have other Borland products installed that use a different configuration 
+file and you want to change the parameters in that file, you must use 
+File|Open to explicitly open the file.
+    
+Depending on the types of files you are accessing, you might need to 
+change some or all of the following IDAPI.CFG settings:
+    
+  - DBASE FILE TYPE -- During installation, if a BDE configuration file 
+    exists on your machine, its settings are read into the new BDE
+    configuration file. This may cause the dBASE FILE TYPE level to be 
+    set to 4. To use the new Visual dBASE field types, set DBASE FILE TYPE 
+    to 5. 
+    
+  - LOCAL SHARE -- If you do not access any other Borland database software 
+    over a network, you need to set LOCAL SHARE (System Page) to TRUE to 
+    use both VDBT and any non-BDE Borland products that may access a 
+    table at the same time. 
+    
+  - NET DIR -- If you are using Paradox tables on a shared drive (network), 
+    you must enter a valid path into the IDAPI.CFG's Paradox driver 
+    NET DIR setting.  See the instructions above on how to use the BDE 
+    Configuration Utility. 
+    
+    
+
+
